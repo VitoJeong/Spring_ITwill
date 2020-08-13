@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- member 테이블 관련 SQL 구문만 처리 -->
+<!-- namespace: 외부에서 해당 파일을 구분할 수 있도록 하는 값 -->
+<mapper namespace="com.itwillbs.mapper.MemberMapper">
+
+ <!-- getTime 아이디 값을 통해서 해당 쿼리를 실행
+ 	결과값을 string 타입으로 리턴
+ -->
+ <select id="getTime" resultType="string">
+  select now()
+ </select>
+ 
+ <!-- 회웥가입 처리 SQL -->
+ <insert id="insertMember">
+ 	insert into tbl_member(userid,userpw,username,email) 
+ 	values(#{userid},#{userpw},#{username},#{email}) 
+ </insert>
+ 
+ <!-- ID에 해당하는 회원정보 검색 SQL -->
+ <select id="getMember" resultType="com.itwillbs.domain.MemberVO">
+ 	
+ 	select * 
+ 	from tbl_member 
+ 	where userid = #{userid}
+ 
+ </select>
+ 
+ <!-- ID,PW에 해당하는 회원정보 검색 SQL -->
+ <select id="getMemberWithIdPw" resultType="com.itwillbs.domain.MemberVO">
+ 	
+ 	select * 
+ 	from tbl_member 
+ 	where userid = #{userid} and userpw = #{userpw}
+ 
+ </select>
+ 
+ <!-- 
+ 	#{ }
+ 	- get(),set() 역할
+ 	- 전달되는 파라미터가 하나인경우 그대로 처리(기본형,문자열)
+ 	- PreparedStatement 객체 역할 처리 
+ -->
+
+</mapper>
