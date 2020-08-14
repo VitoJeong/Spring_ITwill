@@ -24,7 +24,7 @@ public class MyBatisTest {
 	@Test
 	public void testFactory() {
 		
-		System.out.println("bean 객체 의존 주입!(객체 생성)");
+		System.out.println("bean 객체 의존 주입!(객체 생성)");   
 		System.out.println("@@@@@@@@@ sqlFactory : "+sqlFactory);
 	}
 	
