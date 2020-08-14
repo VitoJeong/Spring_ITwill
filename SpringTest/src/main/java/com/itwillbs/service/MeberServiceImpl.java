@@ -30,6 +30,26 @@ public class MeberServiceImpl implements MemberService{
 	
 		
 	}
+
+	@Override
+	public MemberVO loginCheck(MemberVO vo) {
+
+		System.out.println("@@@@ Service: controller에서 로그인 체크 호출");
+		System.out.println("@@@@ Service: 호출시 로그인 체크 정보를 가져옴");
+		System.out.println("@@@@ Service: "+vo);
+		
+		// 로그인 체크 기능이 있는 DAO 객체로 이동
+		MemberVO DBvo = 
+				mdao.getMemberWithIdPw(vo.getUserid(), vo.getUserpw());
+		
+		System.out.println("@@@@ Service: DAO 처리 완료 후 정보 저장 완료");
+		System.out.println("@@@@ Service: "+ DBvo);
+		System.out.println("@@@@ Service: controller 페이지로 이동");
+		
+		return DBvo;
+	}
+	
+	
 	
 	
 	
