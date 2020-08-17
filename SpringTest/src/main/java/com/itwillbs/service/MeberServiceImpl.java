@@ -48,6 +48,22 @@ public class MeberServiceImpl implements MemberService{
 		
 		return DBvo;
 	}
+
+	@Override
+	public MemberVO getMember(String id) {
+		
+		System.out.println("@@@@ Service: controller -> service 객체 호출");
+		System.out.println("@@@@ Service: 회원아이디 정보를 가지고와서 DAO 이동");
+		
+		// DAO 객체 안에 있는 회원 저옵를 가져오는 메서드 호출
+		MemberVO vo = mdao.getMember(id);
+		
+		
+		System.out.println("@@@@ Service: DAO 처리완료, 결과 리턴완료");
+		System.out.println("@@@@ Service: controller(/member/info) 이동");
+
+		return vo;
+	}
 	
 	
 	

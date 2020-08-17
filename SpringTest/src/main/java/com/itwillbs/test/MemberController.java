@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -49,6 +50,7 @@ public class MemberController {
 	
 	// 회원가입 정보를 입력 처리(GET) -> 화면
 	// value -> 이동할 주소
+	// http://localhost:8080/member/insertForm
 	@RequestMapping(value = "/insert", method=RequestMethod.GET)
 	public String insertGET() throws Exception{
 		
@@ -60,6 +62,8 @@ public class MemberController {
 	
 	
 	// 회원 가입 처리동작(POST)
+	// http://localhost:8080/test/member/login(x)
+	// http://localhost:8080/member/login
 	@RequestMapping(value="/insert", method = RequestMethod.POST)
 	public String insertPOST(MemberVO vo) throws Exception{
 		// 메서드 전달인자를 사용해서 페이지 이동시 정보를 가져올 수 있음
@@ -82,7 +86,8 @@ public class MemberController {
 	
 	
 	// 로그인처리 (GET) 메서드
-	// http://localhost:8080/test/member/login
+	// http://localhost:8080/test/member/login(x)
+	// http://localhost:8080/member/login
 	@RequestMapping(value="/login", method = RequestMethod.GET)
 	public String loginGET() throws Exception{
 		
@@ -97,7 +102,8 @@ public class MemberController {
 	}
 	
 	// login처리 (POST)
-	// http://localhost:8080/test/member/login
+	// http://localhost:8080/test/member/login(x)
+	// http://localhost:8080/member/login
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String loginPOST(MemberVO vo,HttpSession session) throws Exception{
 		logger.info("/member/login.jsp -> loginPOST() 호출 (아이디,비밀번호)");
@@ -125,18 +131,77 @@ public class MemberController {
 	}
 	
 	// 메인페이지 (/member/main (get))
-	// http://localhost:8080/test/member/main
+	// http://localhost:8080/test/member/main(x)
+	// http://localhost:8080/member/main
 	@RequestMapping(value = "/main", method=RequestMethod.GET)
 	public void mainGET(HttpSession session) throws Exception{
 		
 		logger.info("/member/main (get) -> /member/main.jsp");
-		logger.info((String) session.getAttribute("userid"));
 		
 		
 	}
 	
+	// 로그아웃(/member/logout)
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String logoutGET(HttpSession session) throws Exception{
+		
+		logger.info("/member/logout (get) -> /member/main");
+		
+		// 세션값을 초기화
+		session.removeAttribute("userid");
+		
+		// main 페이지로 이동
+		
+		return "redirect:/member/main";
+	}
 	
 	
+	// 회원정보보기(/member/info)
+	@RequestMapping(value="/info", method=RequestMethod.GET)
+	public String infoGET(HttpSession session, Model model) throws Exception {
+		
+		logger.info("/member/info (get) -> /member/info.jsp");
+		
+		// 세션값(id) 가져오기
+		String id = (String) session.getAttribute("userid");
+		
+		// 회원 정보 가져오기 (service -> DAO -> Mysql)
+		MemberVO vo = service.getMember(id);
+		logger.info("찾아온 회원 정보 : "+vo);
+		
+		// 가져온 회원정보를 저장해서 -> view(.jsp) 이동
+		// Model 객체 사용(컨트롤러 -> 뷰 이동시 정보저장 공간)
+		model.addAttribute("membervo", vo);
+		
+		
+		//해당 jsp페이지로 이동
+		return "/member/info";
+	}
+	
+	// 회원정보 수정(/member/update)
+	// http://localhost:8080/member/update
+	@RequestMapping(value="/update", method = RequestMethod.GET)
+	public String updateGET(HttpSession session, Model model) throws Exception{
+		
+		logger.info("updateGET() 호출");
+		logger.info("/member/update get -> /member/update.jsp");
+		
+		// 세션값(id) 가져오기
+		String id = (String) session.getAttribute("userid");
+		
+		// 서비스 -> DAO -> DB
+		// 회원정보 모두를 가져오는 동작
+		MemberVO vo = service.getMember(id);
+		logger.info("찾아온 회원 정보 : "+vo);
+		
+		// 회원정보를 Model 객체에 담아서 view 페이지로 전달
+		model.addAttribute("membervo", vo);
+		
+		
+		// 페이지이동(void)
+		// /member/update.jsp페이지로 이동
+		return"/member/update";
+	}
 }
 
 

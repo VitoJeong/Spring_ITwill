@@ -47,5 +47,25 @@
 		만약에 먼저 사용되는 속성이 있을경우 다음 영역의 검색은 생략 -->
 	<h3>${ userid } 님이 로그인 하셨습니다.</h3>
 	
+	
+	<hr>
+	
+	<input type="button" value="로그아웃" 
+		onclick="location.href='/member/logout'"
+	>
+	
+	<hr>
+	<h3><a href="/member/info"> 회원 정보 보기(select)</a></h3>
+	
+	<hr>
+	<h3><a href="/member/update"> 회원 정보 수정(update)</a></h3>
+	
 </body>
+
+
+
 </html>
+
+
+
+
