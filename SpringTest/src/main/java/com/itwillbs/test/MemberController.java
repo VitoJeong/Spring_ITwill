@@ -266,7 +266,7 @@ public class MemberController {
 	// 회원 목록 출력 처리
 	// http://localhost:8080/member/list
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String listGET(HttpSession session) throws Exception{
+	public String listGET(HttpSession session,Model model) throws Exception{
 		
 		logger.info("/member/list get -> member/memberList.jsp 이동" );
 		
@@ -280,10 +280,13 @@ public class MemberController {
 		List<MemberVO> memberList = service.getMemberList();
 		logger.info(memberList +"");
 		
+		
+		// Model 객체 사용 (컨트롤러 -> 뷰 데이터 이동 컨테이너)
+		model.addAttribute("memberList",memberList);
 		// 회원정보를 모두 저장 후 /member/memberList.jsp 페이지에서 출력
 		
 		
-		return "";
+		return "/member/memberList";
 	}
 	
 	
