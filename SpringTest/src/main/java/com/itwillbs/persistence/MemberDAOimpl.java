@@ -1,6 +1,8 @@
 package com.itwillbs.persistence;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -104,6 +106,48 @@ public class MemberDAOimpl implements MemberDAO{
 		return vo;
 		
 	}
+
+
+	@Override
+	public void updateMember(MemberVO vo) {
+		System.out.println("@@@@ DAO : service에서 해당동작을 호출");
+		System.out.println("@@@@ DAO : 수정할 정보를 받아옴");
+		System.out.println("@@@@ DAO : vo -> " + vo);
+		System.out.println("@@@@ DAO : mapper 이동해서 쿼리 작동");
+		
+		// sqlSession (주입) 사용
+		sqlSession.update(namespace + ".updateMember", vo);
+		
+		System.out.println("@@@@ DAO : mapper 사용 쿼리 실행 완료");
+		System.out.println("@@@@ DAO : service 객체로 이동");
+		
+		
+	}
+
+
+	@Override
+	public int deleteMember(MemberVO vo) {
+		System.out.println("@@@@ DAO : service에서 해당동작을 호출");
+		System.out.println("@@@@ DAO : 삭제할 정보를 받아옴");
+		System.out.println("@@@@ DAO : vo -> " + vo);
+		System.out.println("@@@@ DAO : mapper 이동해서 쿼리 작동");
+
+		int values = sqlSession.delete(namespace+".deleteMember",vo );
+		
+		System.out.println("@@@@ DAO : 삭제완료. 삭제된 회원수 -> "+ values);
+		System.out.println("@@@@ DAO : DAO-> service(삭제된 회원수 가지고 이동)");
+		
+		return values;
+	}
+
+
+	@Override
+	public List<MemberVO> getMemberList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 	
 	
 	

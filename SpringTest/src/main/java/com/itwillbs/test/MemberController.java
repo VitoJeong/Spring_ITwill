@@ -138,6 +138,9 @@ public class MemberController {
 		
 		logger.info("/member/main (get) -> /member/main.jsp");
 		
+		// 파라미터값 저장
+		
+		
 		
 	}
 	
@@ -181,7 +184,7 @@ public class MemberController {
 	// 회원정보 수정(/member/update)
 	// http://localhost:8080/member/update
 	@RequestMapping(value="/update", method = RequestMethod.GET)
-	public String updateGET(HttpSession session, Model model) throws Exception{
+	public void updateGET(HttpSession session, Model model) throws Exception{
 		
 		logger.info("updateGET() 호출");
 		logger.info("/member/update get -> /member/update.jsp");
@@ -200,9 +203,88 @@ public class MemberController {
 		
 		// 페이지이동(void)
 		// /member/update.jsp페이지로 이동
-		return"/member/update";
 	}
-}
+	
+	// 회원 정보 수정 처리 /member/update
+	@RequestMapping(value="/member/update", method = RequestMethod.POST)
+	public String updatePOST(MemberVO vo) {
+		
+		// /member/update.jsp 에서 입력받은 수정할 정보를 가져와서
+		// DB로 이동(service -> DAO -> mapper -> Mysql)
+		logger.info("/member/update.jsp submit -> /member/update POST");
+		logger.info("vo(수정할정보) : " + vo);
+		
+		// 서비스 객체에 있는 정보 수정메서드 호출
+		service.updateMember(vo);
+		
+		logger.info("service 처리 완료 (회원정보 수정완료)");
+		
+		// 수정완료 후 페이지 이동(main)
+		
+		return "redirect:/member/main";
+	}
+	
+	
+	// /member/delete
+	// http://localhost:8080/member/delete
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String deleteGET() throws Exception{
+		
+		
+		// /WEB-INF/views/member/deleteForm.jsp 페이지 이동
+		return "/member/deleteForm";
+		
+	}
+	
+	// /member/delete (회원탈퇴 처리)
+	// http://localhost:8080/member/delete
+	@RequestMapping(value= "/delete", method = RequestMethod.POST)
+	public String deletePOST(MemberVO vo, HttpSession session,Model model) throws Exception{
+		
+		logger.info("/member/delete.jsp submit -> /member/delete POST");
+		
+		// jsp 페이지에서 전달한(submit) 정보를 저장(userid,userpw)
+		// + session 내장객체정보 저장
+		
+		// DAO 이동해서 삭제 (service -> DAO ->mapper -> Mysql)
+		// 의존주입 받은 서비스 객체 사용
+		service.deleteMember(vo);
+		// 세션값을 초기화
+		session.invalidate();
+		
+		// 삭제완료시 메세지
+		// view페이지로 데이터 전달
+		model.addAttribute("result","delOK");
+		
+		// 페이지 이동(main)
+		return "redirect:/member/main";
+	}
+	
+	// /member/list
+	// 회원 목록 출력 처리
+	// http://localhost:8080/member/list
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public String listGET(HttpSession session) throws Exception{
+		
+		logger.info("/member/list get -> member/memberList.jsp 이동" );
+		
+		// 세션값 (id) 사용해서 관리자인지 판별
+		String id = (String) session.getAttribute("userid");
+		if(id == null || !id.equals("admin")) {
+			return "redirect:/member/login";
+		}
+		
+		// 관리자 일때 서비스를 통해서 회원 목록을 전부 가져오기
+		service.getMemberList();
+		
+		// 회원정보를 모두 저장 후 /member/memberList.jsp 페이지에서 출력
+		
+		
+		return "/member/memberList";
+	}
+	
+	
+} // MemberController 끝
 
 
 

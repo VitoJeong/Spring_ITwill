@@ -16,10 +16,30 @@
 		
 		// 세션값이 없을경우
 		if (id == null){
-			response.sendRedirect(request.getContextPath()+"/member/login");
+			//response.sendRedirect(request.getContextPath()+"/member/login");
+			id = "TEST";
 		}
 		
+		
+		// 페이지 실행순서
+		// java(jsp) -> JSTL(el표현식) ->html -> javascript -> jquery
 	%>
+	
+	<h2>result: ${ param.result }</h2>
+	
+	<script type="text/javascript">
+		//alert(${param.result});
+		
+		var stmp = '${ sessionScope.userid}';
+			alert(stmp);
+		// EL 표현식 (파라미터값) 데이터를 자바스크립트 변수에 저장
+		var tmp = '${param.result}';
+
+		// alert("TEST! : " + tmp);
+		if(tmp == 'delOK'){
+			alert("삭제완료!!!");
+			}
+	</script>
 	
 	<!-- jsp 표현식 (자바코드의 변수에 접근해서 화면에 출력) -->
 	<h3><%=id %> 님이 로그인 하셨습니다.</h3>
@@ -60,6 +80,19 @@
 	<hr>
 	<h3><a href="/member/update"> 회원 정보 수정(update)</a></h3>
 	
+	<hr>
+	<h3><a href="/member/delete"> 회원 정보 삭제(delete)</a></h3>
+	
+	<!-- 회원 정보리스트는 관리자(damin)만 사용가능 -->
+	
+	<%
+		if(id != null && id.equals("admin")){
+	%>
+	<hr>
+	<h3><a href="/member/list"> 회원 정보 리스트(select-list)</a></h3>
+	<%
+		}
+	%>
 </body>
 
 

@@ -21,8 +21,8 @@
 	%>
 	<fieldset>
 		<legend>회원 수정</legend>
-		<form action="/member/" method="post" >
-			아이디 : <input type="text" name="userid" value="${membervo.userid }"><br>
+		<form action="/member/update" method="post" >
+			아이디 : <input type="text" name="userid" value="${membervo.userid }" readonly><br>
 			비밀번호 : <input type="text" name="userpw"><br>
 			이름 : <input type="text" name="username" value="${membervo.username }"><br>
 			이메일 : <input type="text" name="email" value="${membervo.email }"><br>

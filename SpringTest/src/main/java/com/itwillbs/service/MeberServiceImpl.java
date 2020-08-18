@@ -1,5 +1,8 @@
 package com.itwillbs.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -64,7 +67,51 @@ public class MeberServiceImpl implements MemberService{
 
 		return vo;
 	}
-	
+
+	@Override
+	public void updateMember(MemberVO vo) {
+		
+		System.out.println("@@@@ Service: 컨트롤러에서 수정동작 처리호출");
+		System.out.println("@@@@ Service: 수정할 정보 가져옴");
+		System.out.println("@@@@ Service: vo ->" + vo);
+		System.out.println("@@@@ Service: DAO객체를 호출해서 동작 처리");
+		
+		mdao.updateMember(vo);
+		
+		System.out.println("@@@@ service : DAO 처리 완료 ");
+		System.out.println("@@@@ service : Controller 페이지로 이동 ");
+
+		
+	}
+
+	@Override
+	public void deleteMember(MemberVO vo) {
+		System.out.println("@@@@ service : controller -> service 호출 ");
+		System.out.println("@@@@ service : 삭제할 회원정보 전달받음 ");
+		System.out.println("@@@@ service : vo ->"+vo);
+		System.out.println("@@@@ service : DAO 회원 삭제 처리 동작 메서드 호출");
+		
+		int num = mdao.deleteMember(vo);
+		// 정상처리
+		if(num == 1) {
+		  System.out.println("@@@@ service : 정상처리 완료!");
+		}
+		// 비밀번호 오류
+		else {
+		   System.out.println("@@@@ service : 정상처리 불가(오류)!");
+		}
+		
+		System.out.println("@@@@ service : DAO 처리완료 -> Controller 이동");
+		
+		
+	}
+
+	@Override
+	public List<MemberVO> getMemberList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 	
