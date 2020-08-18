@@ -108,8 +108,15 @@ public class MeberServiceImpl implements MemberService{
 
 	@Override
 	public List<MemberVO> getMemberList() {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("@@ service : controller -> service 호출");
+		System.out.println("@@ service : DAO 이동해서 회원 목록 전부를 가져오기");
+		List<MemberVO> memberList = 
+				mdao.getMemberList();
+		
+		System.out.println("@@ service : DAO 처리 완료!");
+		System.out.println("@@ service : 전달받은 목록확인 -> " + memberList);
+		System.out.println("@@ service : 결과를 리턴해서 contoller 페이지로 이동");
+		return memberList;
 	}
 
 	

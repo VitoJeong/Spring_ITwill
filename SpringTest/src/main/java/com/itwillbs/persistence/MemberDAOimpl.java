@@ -143,8 +143,22 @@ public class MemberDAOimpl implements MemberDAO{
 
 	@Override
 	public List<MemberVO> getMemberList() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		System.out.println("@@ DAO : service -> DAO");
+		System.out.println("@@ DAO : DAO -> mapper");
+		
+		List<MemberVO> memberList = 
+				sqlSession.selectList(namespace+".getMemberList");
+		
+		// selectList() : DB의 select 결과를 리스트로 저장하는 메서드
+		// mapper에서는 Lsit를 리턴x, List에 저장되는 타입을 리턴해야함
+		// -> 스프링이 알아서 리스트에 저장
+		
+		System.out.println("@@ DAO : mapper의 결과를 List에 저장");
+		System.out.println("@@ DAO : List -> " + memberList);
+		System.out.println("@@ DAO : list리턴해서 Service페이지로 이동");
+
+		return memberList;
 	}
 
 

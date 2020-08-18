@@ -1,5 +1,7 @@
 package com.itwillbs.test;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -275,12 +277,13 @@ public class MemberController {
 		}
 		
 		// 관리자 일때 서비스를 통해서 회원 목록을 전부 가져오기
-		service.getMemberList();
+		List<MemberVO> memberList = service.getMemberList();
+		logger.info(memberList +"");
 		
 		// 회원정보를 모두 저장 후 /member/memberList.jsp 페이지에서 출력
 		
 		
-		return "/member/memberList";
+		return "";
 	}
 	
 	
