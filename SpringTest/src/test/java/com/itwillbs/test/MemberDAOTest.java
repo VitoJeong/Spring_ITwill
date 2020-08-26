@@ -46,10 +46,10 @@ public class MemberDAOTest {
 		
 		// 회원 객체 생성
 		MemberVO kim = new MemberVO();
-		kim.setUserid("vito21");
-		kim.setUserpw("1234");
-		kim.setUsername("정창하");
-		kim.setEmail("ckdghk@itwill.co.kr");
+		kim.setUserid("admin");
+		kim.setUserpw("123");
+		kim.setUsername("관리자");
+		kim.setEmail("admin@itwill.co.kr");
 		
 		System.out.println("회원 객체 생성 완료");
 		
@@ -63,13 +63,13 @@ public class MemberDAOTest {
 	@Test
 	public void getMember() throws Exception {
 		
-		System.out.println("@@@@ TEST : 회원 정보 호출 실행 @@@@");
-		
-		MemberVO vo = mdao.getMember("admin");
-		
-		System.out.println("@@@@ TEST : DAO 호출 완료! 결과 확인 @@@@");
-		
-		System.out.println(vo);
+//		System.out.println("@@@@ TEST : 회원 정보 호출 실행 @@@@");
+//		
+//		MemberVO vo = mdao.getMember("admin");
+//		
+//		System.out.println("@@@@ TEST : DAO 호출 완료! 결과 확인 @@@@");
+//		
+//		System.out.println(vo); // vo.toString()
 		
 	}
 	
@@ -80,11 +80,11 @@ public class MemberDAOTest {
 		System.out.println("@@@@ TEST : DAO 객체 사용접근 (의존주입) @@@@");
 		System.out.println("@@@@ TEST : DAO안의 처리 메서드 호출 @@@@");
 		
-		MemberVO vo 
-				= mdao.getMemberWithIdPw("admin", "12");
+		 MemberVO vo 
+				= mdao.getMemberWithIdPw("admin", "123");
 		
 		System.out.println("@@@@ TEST : DAO에서 처리 완료! @@@@");
 		System.out.println("@@@@ TEST : 결과 확인");
-		System.out.println(vo);
+		 System.out.println(vo);
 	}
 }
