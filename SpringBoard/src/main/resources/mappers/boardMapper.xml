@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    
+<!-- namespace : 외부에서 (DAO) 해당 매퍼를 찾을 수 있는 구분 값(실제경로 X)  -->
+<mapper namespace="com.itwillbs.mapper.BoardMapper">
+	
+	<insert id="create">
+		insert into tbl_board (title, content, writer)
+		values(#{title},#{content},#{writer})
+	</insert>
+	
+	<select id="read" resultType="BoardVO">
+		select * from tbl_board
+			where bno = #{bno}
+	</select>
+	
+	<update id="update">
+		update tbl_board set title=#{title}, content=#{content}, writer=#{writer}
+		where bno = #{bno}
+	</update>
+	
+	<delete id="delete">
+		delete from tbl_board where bno=#{bno}
+	</delete>
+	
+	<!-- 글목록 전체를 가져오는 SQL -->
+	<select id="listAll" resultType="BoardVO">
+		<![CDATA[
+			select * from tbl_board
+			where bno > 0
+			order by bno desc, regdate desc
+		]]>
+	</select>
+	<!-- 
+		(UnParsed)Character DATA : 파싱을 하지않는 문자 데이터
+		-> 문자 그대로 처리하겠다.
+		
+		PCDATA : 파싱을 해서 처리하는 문자 데이터
+	 -->
+	
+	
+</mapper>    
+
+
+
