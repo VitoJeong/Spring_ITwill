@@ -1,5 +1,7 @@
 package com.itwillbs.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.domain.BoardVO;
@@ -23,8 +26,8 @@ import com.itwillbs.service.BoardService;
 @Controller
 @RequestMapping("/board/*")
 public class BoardController {
-	// 서비스 호출 -> DAO
 	
+	// 서비스 호출 -> DAO
 	// 서비스 객체 주입(DI)
 	@Inject
 	private BoardService service;
@@ -96,7 +99,7 @@ public class BoardController {
 	// 글목록 동작(/board/listAll)
 	// http://localhost:8082/board/listAll?result=SUCCESS%21
 	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
-	public void listAllGET(@ModelAttribute("result") String result) throws Exception{
+	public void listAllGET(@ModelAttribute("result") String result,Model model) throws Exception{
 		
 		// @ModelAttribute("result") String result
 		// -> model 객체에 있는 속성값을 가져오는 어노테이션
@@ -110,8 +113,42 @@ public class BoardController {
 		}
 		
 		// DB 글 목록을 가져와서 -> view(jsp) 전달 출력
+		// model 객체 사용해서 전달
+		// /board/listAll.jsp (표에 데이터 채우기)
+		
+		List<BoardVO> bList =  service.listAll();
+		
+		// 서비스에서 전달된 글목록 확인(출력)
+		// logger.info("목록 : " + bList);
+		
+		// model 객체 사용 데이터 저장
+		model.addAttribute("boardList", bList);
+		
 		
 	}
+	
+	// 글 본문 보기 동작(/board/read)
+	@RequestMapping(value="/read", method=RequestMethod.GET)
+	public String readGET(@RequestParam("bno") int bno,Model model) throws Exception {
+		
+		// @RequestParam("bno")
+		// => request.getParameter() (문자열 타입)처럼 작동하는 어노테이션
+		// -> 문자열, 숫자, 날짜 형 변환 가능
+		
+		
+		logger.info(" /listAll -> /read GET 페이지 호출");
+		logger.info("전달된 글번호: "+bno);
+		
+		// 글 번호에 해당하는 글정보 모두를 가져오기 
+		// DB에 접근하기 위해 service 객체를 통한 접근시도
+		BoardVO vo = service.read(bno);
+		// 글정보를 전달받아 view 페이지(/board/read.jsp)로 이동
+		logger.info(bno + "번 글정보 : " + vo);
+		model.addAttribute("boardVO", vo);
+		
+		return "/board/read";
+	}
+	
 	
 }
 

@@ -1,5 +1,8 @@
 package com.itwillbs.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -36,5 +39,34 @@ public class BoardServiceImpl implements BoardService{
 		
 	}
 
+	@Override
+	public List<BoardVO> listAll() throws Exception {
+
+		logger.info("컨트롤러에서 호출 서비스(listAll()) 실행");
+		logger.info("DAO 객체(DI)로 이동해서 해당 동작 메서드 호출");
+		
+		List<BoardVO> bList = bdao.listAll();
+		
+		logger.info("service - DB값 저장해서 Controller로 이동");
+		
+		return bList;
+		
+		// return bdao.listAll();
+	}
+
+	@Override
+	public BoardVO read(Integer bno) throws Exception {
+		
+		logger.info("컨트롤러에서 서비스 호출(read)");
+		
+		BoardVO vo = new BoardVO();
+		vo.setBno(bno);
+		
+		logger.info("SQL구문 실행완료 -> 컨트롤러 이동");
+		
+		return bdao.read(vo);
+	}
+
+	
 	
 }

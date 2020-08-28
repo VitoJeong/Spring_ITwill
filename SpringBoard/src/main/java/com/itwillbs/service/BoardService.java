@@ -1,5 +1,7 @@
 package com.itwillbs.service;
 
+import java.util.List;
+
 import com.itwillbs.domain.BoardVO;
 
 public interface BoardService {
@@ -10,4 +12,9 @@ public interface BoardService {
 	// 글 쓰기 (regist)
 	public void regist(BoardVO board) throws Exception;
 	
+	// 글 목록 가져오기
+	public List<BoardVO> listAll() throws Exception;
+	
+	// 글 읽기 (read)
+	public BoardVO read(Integer bno) throws Exception;
 }

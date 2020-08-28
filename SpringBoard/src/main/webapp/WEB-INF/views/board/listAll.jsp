@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../include/header.jsp" %>
 
@@ -26,6 +28,26 @@
 						<th>날짜</th>
 						<th style="width: 60px">조회수</th>
 					</tr>
+					<c:forEach var="boardVO" items="${boardList }">
+						<tr>
+							<td>${boardVO.bno }</td>
+							<td>
+								<a href="/board/read?bno=${boardVO.bno }">
+									${boardVO.title }
+								</a>
+							</td>
+							<td>${boardVO.writer }</td>
+							<td>
+								<fmt:formatDate value="${boardVO.regdate }"
+									pattern="yy-MM-dd HH:mm"/>
+							</td>
+							<td>
+								<span class="badge bg-red">
+								${boardVO.viewcnt }
+								</span>
+							</td>
+						</tr>
+					</c:forEach>
 
 
 				</table>
