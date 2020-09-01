@@ -83,8 +83,10 @@
 
 	if(result == 'SUCCESS@'){
 		// 글쓰고 리스트 페이지 왔을때만 출력
-		alert("글쓰기 완료!<br>" +result);
-		
+		alert("글쓰기 완료!\n" +result);
+	}else if(result = 'delOk'){
+		// 삭제 완료처리
+		alert("글 삭제 완료! " + result);
 	}
 	
 	

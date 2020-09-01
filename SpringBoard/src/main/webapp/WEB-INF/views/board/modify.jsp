@@ -29,12 +29,11 @@
 						</div>
 						<div class="form-group">
 							<label for="exampleInputEmail1">제목</label> 
-							<input type="text" name='title' class="form-control" value="${boardVO.title }"readonly>
+							<input type="text" name='title' class="form-control">
 						</div>
 						<div class="form-group">
 							<label for="exampleInputPassword1">내용</label>
-							<textarea class="form-control" name="content" rows="3"
-								 readonly>${boardVO.content }</textarea>
+							<textarea class="form-control" name="content" rows="3"></textarea>
 						</div>
 						<div class="form-group">
 							<label for="exampleInputEmail1">글쓴이</label> 
@@ -45,8 +44,7 @@
 
 					<div class="box-footer">
 						<button type="button" class="btn btn-warning">수정하기</button>
-						<button type="button" class="btn btn-danger">삭제하기</button>
-						<button type="button" class="btn btn-primary">목록으로</button>
+						<button type="button" class="btn btn-danger">취소하기</button>
 					</div>
 
 
@@ -66,43 +64,21 @@
 </script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		// alert("확인!");
-
-		// 목록으로 버튼 클릭
-		$(".btn-primary").on("click",function(){
-			// 목록페이지로 이동
-			location.href="/board/listAll";
 		
-			});
-
-		// 본문에 글번호 정보를 가지고 있는 form 태그 정보를 가져오기  
-		
-		var formObj = $("form[role='form']");
-		console.log("form : " + formObj);
-		
-		// 삭제하기 클릭
-		$(".btn-danger").on("click",function(){
-			// 삭제 페이지로 이동
-			// 이동시 삭제할 글 번호를 가지고 이동
-			formObj.attr("action", "/board/remove");
-			formObj.submit();
-		
-			});
-		
-	
 		// 수정하기 클릭
 		$(".btn-warning").on("click",function(){
-			// alert("수정하기");
-
-			// 수정하는 페이지로 이동(+수정할 글번호 가지고 이동)
-			// /board/modify 주소로 bno 저장해서 post방식 submit()
-			formObj.attr("action","/board/modify");
-			formObj.attr("method","get");
-			formObj.submit();
 			
 			});
 		
-		});
+		
+		// 취소하기 클릭
+		$(".btn-danger").on("click",function(){
+
+			location.href="/board/listAll";
+			});
+		
+		
+		}); // jQuery 끝
 
 </script>
 <%@ include file="../include/footer.jsp" %>

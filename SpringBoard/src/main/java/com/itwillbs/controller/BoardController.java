@@ -129,7 +129,7 @@ public class BoardController {
 	
 	// 글 본문 보기 동작(/board/read)
 	@RequestMapping(value="/read", method=RequestMethod.GET)
-	public String readGET(@RequestParam("bno") int bno,Model model) throws Exception {
+	public void readGET(@RequestParam("bno") int bno,Model model) throws Exception {
 		
 		// @RequestParam("bno")
 		// => request.getParameter() (문자열 타입)처럼 작동하는 어노테이션
@@ -144,12 +144,52 @@ public class BoardController {
 		BoardVO vo = service.read(bno);
 		// 글정보를 전달받아 view 페이지(/board/read.jsp)로 이동
 		logger.info(bno + "번 글정보 : " + vo);
+		
 		model.addAttribute("boardVO", vo);
 		
-		return "/board/read";
+	}
+	
+	// http://localhost:8082/board/remove
+	// 글 삭제 동작
+	@RequestMapping(value="/remove", method = RequestMethod.POST)
+	public String removePOST(int bno, RedirectAttributes rttr) throws Exception{
+		
+		logger.info("/remove 호출(삭제처리)");
+		
+		// 삭제 -> 서비스 -> DAO -> DB 삭제
+		// 삭제할 글 번호
+		logger.info("삭제할 글번호 : "+ bno);
+		
+		// 서비스에 삭제 처리하는 메서드 호출
+		service.remove(bno);
+		
+		// 페이지 이동
+		rttr.addFlashAttribute("result", "delOk");
+		
+		return "redirect:/board/listAll";
 	}
 	
 	
+	// 글 수정하기(modify)
+	// http://localhost:8082/board/modify?bno=9
+	@RequestMapping(value="/modify", method = RequestMethod.GET)
+	public void modifyGET(@RequestParam("bno") int bno, Model model) throws Exception{
+		
+		logger.info("/board/modify -> /board/modify.jsp 이동");
+		// 전달받은 파라미터 값 저장
+		logger.info(" 수정할 글 번호 : " + bno + " 번 글");
+		
+		// DB에서 수정할 정보를 가지고 와야함(Model 객체 사용)
+		// 정보 저장 -> View 페이지로 이동
+		
+		// DB에서 글 정보를 가져오기(글번호) -> 서비스 기능 호출
+		BoardVO vo = service.read(bno);
+		
+		// DB -> 컨트롤러 정보전달 완료
+		// 저장된 정보 가지고 View페이지 이동
+		model.addAttribute("boardVO", vo);
+		
+	}
 }
 
 

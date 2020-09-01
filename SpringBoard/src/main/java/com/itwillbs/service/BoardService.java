@@ -17,4 +17,7 @@ public interface BoardService {
 	
 	// 글 읽기 (read)
 	public BoardVO read(Integer bno) throws Exception;
+	
+	// 글 삭제(delete)
+	public void remove(Integer bno) throws Exception;
 }
