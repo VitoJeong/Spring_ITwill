@@ -20,4 +20,7 @@ public interface BoardService {
 	
 	// 글 삭제(delete)
 	public void remove(Integer bno) throws Exception;
+	
+	// 글 수정(update)
+	public void modify(BoardVO board) throws Exception;
 }

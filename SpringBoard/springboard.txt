@@ -68,6 +68,14 @@ springboard.txt
    ....
   
    Ajax -> REST API
+   
+   * 예외처리
+   SpringMVC 구조 => 컨트롤러가 많은 호출을 시도하기 때문에 주로 예외처리
+   
+   - @ExceptionHandler (메서드)
+   - @ControllerAdvice -> 가장 일반적이면서 많이 사용되는 형태
+   - @ResponseStatus( http 페이지 상태 )
+   
  
  
  	

@@ -19,6 +19,7 @@ import com.itwillbs.domain.BoardVO;
 import com.itwillbs.service.BoardService;
 
 // @RequestMapping("/board/*")
+// @RequestMapping(value="/board/*")
 // board로 시작되는 모든 주소에 대한 처리
 // -> 컨트롤러 클래스에  사용되는 RequestMapping의미는 컨트롤러 구분목적
 
@@ -190,6 +191,22 @@ public class BoardController {
 		model.addAttribute("boardVO", vo);
 		
 	}
+	
+	// http://localhost:8082/board/modify?bno=9
+	@RequestMapping(value="/modify", method=RequestMethod.POST)
+	public String modifyPOST(BoardVO vo,RedirectAttributes rttr) throws Exception{
+		
+		logger.info("/modify (get) -> /modify (post) 호출");
+		logger.info("vo : " + vo);
+		
+		// 수정할 정보를 받아서 (저장) -> 서비스 -> DAO -> Mapper
+		service.modify(vo);
+		
+		rttr.addFlashAttribute("result", "modifyOK");
+		
+		return "redirect:/board/listAll";
+	}
+	
 }
 
 

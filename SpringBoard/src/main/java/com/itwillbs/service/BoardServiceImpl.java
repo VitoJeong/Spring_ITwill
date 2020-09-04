@@ -82,5 +82,20 @@ public class BoardServiceImpl implements BoardService{
 		
 	}
 
+	@Override
+	public void modify(BoardVO board) throws Exception {
+		
+		logger.info("컨트롤러에서 서비스 요청");
+		logger.info("DAO 객체를 주입 받아서 처리");
+		
+		bdao.update(board);
+		
+		logger.info("정보 수정완료");
+		logger.info("컨트롤러로 페이지 이동");
+		
+	}
+
+	
+	
 	
 }
