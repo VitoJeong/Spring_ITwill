@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.Criteria;
 import com.itwillbs.persistence.BoardDAO;
 import com.itwillbs.persistence.BoardDAOImpl;
 
@@ -93,6 +94,14 @@ public class BoardServiceImpl implements BoardService{
 		logger.info("정보 수정완료");
 		logger.info("컨트롤러로 페이지 이동");
 		
+	}
+
+	@Override
+	public List<BoardVO> listCri(Criteria cri) throws Exception {
+
+		logger.info("Service : listCri(cri) 호출");
+		
+		return bdao.listPage(cri);
 	}
 
 	

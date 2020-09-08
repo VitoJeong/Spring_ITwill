@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.Criteria;
 
 // BoardDAO 역할을 할 수 있도록 지정
 @Repository
@@ -105,6 +106,37 @@ public class BoardDAOImpl implements BoardDAO {
 		
 		return bList;
 	}
+
+
+	@Override
+	public List<BoardVO> listPage(int page) throws Exception {
+		
+		logger.info("DAO : listPage(page) 호출");
+		logger.info("Test를 통해서 sql 구문 확인");
+		
+		if(page <= 0) {
+			page = 1;
+		}
+		
+		// 0, 10, 20, 30.....
+		page = (page -1)*10;
+
+		
+		return session.selectList(NAMESPACE+".listPage",page);
+	}
+
+
+	@Override
+	public List<BoardVO> listPage(Criteria cri) throws Exception {
+
+		logger.info("DAO : listPage(Criteria cri) ");
+		
+		return session.selectList(NAMESPACE+".listCri",cri);
+	}
+	
+	
+	
+	
 	
 	
 	
