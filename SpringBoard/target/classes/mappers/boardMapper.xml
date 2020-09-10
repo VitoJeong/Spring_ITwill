@@ -42,6 +42,7 @@
 	 -->
 	
 	<!-- 페이지 처리 객체 사용(Criteria) -->
+	<!-- Criteria객체를 매개변수로 넣으면 get메서드로 해당 정보호출 -->
 	<select id="listCri" resultType="BoardVO">
 	
 	select * from tbl_board

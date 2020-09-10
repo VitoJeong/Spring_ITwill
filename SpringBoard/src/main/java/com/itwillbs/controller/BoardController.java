@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.domain.BoardVO;
 import com.itwillbs.domain.Criteria;
+import com.itwillbs.domain.PageMaker;
 import com.itwillbs.service.BoardService;
 
 // @RequestMapping("/board/*")
@@ -213,7 +214,7 @@ public class BoardController {
 	// http://localhost:8082/board/listCri?pageSize=5
 	// http://localhost:8082/board/listCri?page=2&pageSize=5
 	
-	// 전달되는 파라미터 값들이 메서드 전달인자에 저장 처리
+	// 전달되는 파라미터 값들이 메서드 전달인자에 저장 처리(set메서드)
 	
 	@RequestMapping(value="/listCri", method=RequestMethod.GET)
 	public void listCri(Model model,Criteria cri) throws Exception{
@@ -225,6 +226,33 @@ public class BoardController {
 		
 		// -> 정보를 저장해서 view 페이지 이동 Model
 		model.addAttribute("boardList", boardList);
+		
+	}
+	
+	// http://localhost:8082/board/listPage
+	@RequestMapping(value = "/listPage", method = RequestMethod.GET)
+	public void listPage(Criteria cri, Model model) throws Exception{
+		
+		logger.info(" C: /listPage 호출 ");
+		logger.info("cri : " + cri);
+		
+		// List<BoardVO> boardList = service.listCri(cri);
+		// model.addAttribute("boardList", boardList);
+		
+		// 1) 페이징처리 (본문)
+		// Controller -> Service -> DAO -> Mapper -> .... -> Controller -> View
+		model.addAttribute("boardList", service.listCri(cri));
+		
+		// 2) 페이징처리 (하단)
+		PageMaker pm = new PageMaker();
+		
+		pm.setCri(cri); // 외부에서 전달되는 정보(파라미터값 page, pageSize)
+		// SELECT count(*) FROM tbl_board; 사용 계산
+		// -> DB쿼리 사용변경 에정
+		pm.setTotalCount(12);
+		
+		// 페이징 처리 정보를 model 객체에 저장 -> view 페이지로 이동
+		model.addAttribute("pm", pm);
 		
 	}
 	
